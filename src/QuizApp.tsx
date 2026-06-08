@@ -1,29 +1,22 @@
 import { useState } from 'react'
 import Question from './components/Question.tsx'
 import Result from './components/Result.tsx'
+import QuestionEditor from './components/QuestionEditor.tsx'
 
 export default function QuizApp() {
-  const [questions, _] = useState<Question[]>([
-    {
-      id: 1,
-      question: "What is the capital of France?",
-      options: ["Paris", "London", "Berlin", "Madrid"],
-      answers: "Paris"
-    },
-    {
-      id: 2,
-      question: "What is the largest planet in our solar system?",
-      options: ["Jupiter", "Saturn", "Mars", "Earth"],
-      answers: "Jupiter"
-    }
-  ])
+  const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
-  const [isQuizEnd, setIsQuizEnd] = useState(false)
+  const [isQuizEnd, setQuizEnd] = useState(false)
+  const [isEditMode, setEditMode] = useState(true)
 
+  if (isEditMode) return <QuestionEditor onDone={(q) => {
+    setQuestions(q)
+    setEditMode(false)
+  }}/>
   if (isQuizEnd) return <Result score={score} />
-  else return (
-    <div style={{ padding: '0 24px' }}>
+  return (
+    <div>
       <h2>Current score: {score}</h2>
       <Question
         key={questions[currentQuestion].id}
@@ -33,7 +26,7 @@ export default function QuizApp() {
         answers={questions[currentQuestion].answers}
         onNextQuestion={() => {
           if (currentQuestion < questions.length - 1) setCurrentQuestion(prev => prev + 1)
-          else setIsQuizEnd(true)
+          else setQuizEnd(true)
         }}
         onIncreaseScore={() => setScore(prev => prev + 1)}
         isFinalQuestion={currentQuestion == questions.length - 1}
