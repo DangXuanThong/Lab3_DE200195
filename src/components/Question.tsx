@@ -1,4 +1,4 @@
-import type { Question } from './QuizApp.tsx'
+import type { Question } from '../QuizApp.tsx'
 import './Question.css'
 import { useState } from 'react'
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import Question from './Question.tsx'
+import Question from './components/Question.tsx'
+import Result from './components/Result.tsx'
 
 export default function QuizApp() {
   const [questions, _] = useState<Question[]>([
@@ -20,7 +21,8 @@ export default function QuizApp() {
   const [score, setScore] = useState(0)
   const [isQuizEnd, setIsQuizEnd] = useState(false)
 
-  return (
+  if (isQuizEnd) return <Result score={score} />
+  else return (
     <div style={{ padding: '0 24px' }}>
       <h2>Current score: {score}</h2>
       <Question
@@ -33,7 +35,7 @@ export default function QuizApp() {
           if (currentQuestion < questions.length - 1) setCurrentQuestion(prev => prev + 1)
           else setIsQuizEnd(true)
         }}
-        onIncreaseScore={() => setScore(prev => prev + 10)}
+        onIncreaseScore={() => setScore(prev => prev + 1)}
         isFinalQuestion={currentQuestion == questions.length - 1}
       />
     </div>
