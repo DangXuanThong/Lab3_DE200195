@@ -1,0 +1,20 @@
+.answer-list {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    outline: 1px solid gray;
+    padding-left: 0;
+    list-style: none;
+}
+
+.answer-list > *:not(:last-child) {
+    border-bottom: 1px solid gray;
+}
+
+.answer-list > li:first-child {
+    border-radius: 9px 9px 0 0;
+}
+
+.answer-list > li:last-child {
+    border-radius: 0 0 9px 9px;
+}
